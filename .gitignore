@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+
+# IDE
+.vs/
+.idea/
+*.user
+
+# Logs
+logs/
+
+# Secrets
+.env
+secrets/
