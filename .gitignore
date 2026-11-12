@@ -13,3 +13,4 @@ logs/
 # Secrets
 .env
 secrets/
+appsettings.Development.json
