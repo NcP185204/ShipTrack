@@ -96,3 +96,9 @@
 - Decision: Compute all aggregations with `GroupBy`/`Sum`/`Count` LINQ queries executed in SQL Server (`AsNoTracking`), then assemble the DTO in the repository. Success rate is `Delivered / (Delivered + Returned)` and is 0 when the denominator is 0.
 - Alternatives considered: loading all shipments into memory and aggregating in C# (inefficient, does not scale).
 - Consequences: Minimal data transferred; the database does the heavy lifting.
+
+### D-15: Unit testing strategy — pure logic + Moq mocks (2026-11-15)
+- Context: RULES §H requires tests for the fee calculators, state machine, R7, R9, R11, and cancellation; STACK allows xUnit + Moq + EF Core InMemory/SQLite.
+- Decision: Test pure logic (fee calculators, `ShipmentStateMachine`) without a database, and test services (`ShipmentService`, `ShipmentStatusService`) by mocking repository interfaces with Moq — no SQLite/InMemory provider.
+- Alternatives considered: EF Core InMemory/SQLite (closer to integration tests but heavier and slower).
+- Consequences: `tests/ShipTrack.Tests` runs 36 fast, deterministic unit tests; actual database behavior is covered by manual smoke tests.
